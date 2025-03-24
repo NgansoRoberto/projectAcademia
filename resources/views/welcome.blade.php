@@ -3,228 +3,274 @@
 @section('title', 'IUG - Institut Universitaire du Golfe de Guinée')
 
 @section('content')
-<!-- Slider -->
-<div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="{{ asset('images/slider1.jpg') }}" class="d-block w-100" alt="IUG Campus">
-            <div class="carousel-caption">
-                <h2>Bienvenue à l'Institut Universitaire du Golfe de Guinée</h2>
-                <p>Une éducation de qualité pour un avenir brillant</p>
-                <a href="#" class="btn btn-success btn-lg">Pré-inscription</a>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="{{ asset('images/slider2.jpg') }}" class="d-block w-100" alt="Étudiants IUG">
-            <div class="carousel-caption">
-                <h2>Des formations adaptées au marché du travail</h2>
-                <p>Formez-vous aux métiers de demain</p>
-                <a href="#" class="btn btn-success btn-lg">Nos formations</a>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="{{ asset('images/slider3.jpg') }}" class="d-block w-100" alt="Campus IUG">
-            <div class="carousel-caption">
-                <h2>Un environnement propice à l'apprentissage</h2>
-                <p>Des infrastructures modernes et un corps enseignant qualifié</p>
-                <a href="#" class="btn btn-success btn-lg">Découvrir l'IUG</a>
-            </div>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
 
-<!-- Campus Block -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="section-title">Nos <span class="text-success">Campus</span></h2>
-            <p class="lead">Découvrez nos trois campus modernes et bien équipés</p>
-        </div>
+  
+    <div class="container mt-5">
         <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card campus-card h-100">
-                    <img src="{{ asset('images/campus1.jpg') }}" class="card-img-top" alt="Campus Principal">
-                    <div class="card-body text-center">
-                        <h4 class="card-title">Campus Principal</h4>
-                        <p class="card-text">Notre campus principal accueille l'administration et les formations en management, commerce et droit.</p>
-                        <p><i class="fas fa-map-marker-alt text-success me-2"></i>Douala, Quartier Bonamoussadi</p>
-                    </div>
-                    <div class="card-footer bg-white border-0 text-center">
-                        <a href="#" class="btn btn-outline-success">En savoir plus</a>
-                    </div>
+            <div class="col-lg-7 pe-5">
+                <div class="position-relative">
+                    <img src="{{asset('app-assets/images/logo/iug-et.png')}}" alt="Professionnelle avec ordinateur" class="img-fluid rounded position-relative" style="z-index: 2;">
+                    <div class="position-absolute" style="top: -10%; right: -10%; width: 80%; height: 140%; background-color: #198754; opacity: 0.2; z-index: 1; border-radius: 50%;"></div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card campus-card h-100">
-                    <img src="{{ asset('images/campus2.jpg') }}" class="card-img-top" alt="Campus Technique">
-                    <div class="card-body text-center">
-                        <h4 class="card-title">Campus Technique</h4>
-                        <p class="card-text">Le campus technique abrite nos formations en ingénierie, informatique et sciences appliquées.</p>
-                        <p><i class="fas fa-map-marker-alt text-success me-2"></i>Douala, Quartier Ndokoti</p>
-                    </div>
-                    <div class="card-footer bg-white border-0 text-center">
-                        <a href="#" class="btn btn-outline-success">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card campus-card h-100">
-                    <img src="{{ asset('images/campus3.jpg') }}" class="card-img-top" alt="Campus Santé">
-                    <div class="card-body text-center">
-                        <h4 class="card-title">Campus Santé</h4>
-                        <p class="card-text">Notre campus santé est dédié aux formations en sciences médicales et paramédicales.</p>
-                        <p><i class="fas fa-map-marker-alt text-success me-2"></i>Douala, Quartier Bali</p>
-                    </div>
-                    <div class="card-footer bg-white border-0 text-center">
-                        <a href="#" class="btn btn-outline-success">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Statistics Block -->
-<section class="bg-dark text-white py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 text-center mb-4 mb-md-0">
-                <h2 class="display-4 text-warning">+25</h2>
-                <p class="stats-text">Années d'expérience dans l'enseignement</p>
-            </div>
-            <div class="col-md-3 text-center mb-4 mb-md-0">
-                <h2 class="display-4 text-warning">+90</h2>
-                <p class="stats-text">Enseignants et personnels qualifiés</p>
-            </div>
-            <div class="col-md-3 text-center mb-4 mb-md-0">
-                <h2 class="display-4 text-warning">+90</h2>
-                <p class="stats-text">Salles de cours et un amphi de 700 places</p>
-            </div>
-            <div class="col-md-3 text-center">
-                <h2 class="display-4 text-warning">+5000</h2>
-                <p class="stats-text">Étudiants inscrits chaque année</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Latest News and Events -->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="section-title">Actualités <span class="text-success">& Événements</span></h2>
-            <p class="lead">Restez informé des dernières nouvelles et événements de l'IUG</p>
-        </div>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card news-card h-100">
-                    <img src="{{ asset('images/news1.jpg') }}" class="card-img-top" alt="Remise des diplômes">
-                    <div class="card-body">
-                        <div class="news-date mb-2">
-                            <span class="bg-success text-white px-3 py-1">15 Mars 2025</span>
+            <div class="col-lg-5" style="margin-top:150px">
+                <div class="card border-0 shadow-sm p-4 mt-5 mb-5" style="border-radius: 15px; margin-top: 120px;">
+                    <div class="text-center py-4">
+                        <a href="#" class="btn btn-success btn-sm px-4 rounded-pill" style="padding-top: 12px; padding-bottom: 12px;">Optimisez votre réussite académique.</a>
+                        <div class="mt-4 text-muted">
+                            <p class="mb-1">Découvrez vos cours et interagissez avec vos enseignants.</p>
                         </div>
-                        <h5 class="card-title">Cérémonie de remise des diplômes 2025</h5>
-                        <p class="card-text">La cérémonie annuelle de remise des diplômes se tiendra le 30 avril au campus principal.</p>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="btn btn-link text-success p-0">Lire la suite <i class="fas fa-arrow-right ms-1"></i></a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card news-card h-100">
-                    <img src="{{ asset('images/news2.jpg') }}" class="card-img-top" alt="Conférence">
-                    <div class="card-body">
-                        <div class="news-date mb-2">
-                            <span class="bg-success text-white px-3 py-1">10 Mars 2025</span>
-                        </div>
-                        <h5 class="card-title">Conférence internationale sur l'innovation</h5>
-                        <p class="card-text">L'IUG accueillera une conférence internationale sur l'innovation et l'entrepreneuriat.</p>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="btn btn-link text-success p-0">Lire la suite <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
+                <div class="position-relative">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNjAgMTEwYzI3LjYxNCAwIDUwLTIyLjM4NiA1MC01MFM4Ny42MTQgMTAgNjAgMTAgMTAgMzIuMzg2IDEwIDYwczIyLjM4NiA1MCA1MCA1MHoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE5ODc1NCIgc3Ryb2tlLXdpZHRoPSI1Ii8+PC9zdmc+" alt="" class="position-absolute" style="right: 0; top: 70%; z-index: -1;">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgOTBjNDQuMTgzIDAgODAtMzUuODE3IDgwLTgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxOTg3NTQiIHN0cm9rZS13aWR0aD0iNSIvPjwvc3ZnPg==" alt="" class="position-absolute" style="right: 30%; top: 30%; z-index: -1;">
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card news-card h-100">
-                    <img src="{{ asset('images/news3.jpg') }}" class="card-img-top" alt="Partenariat">
-                    <div class="card-body">
-                        <div class="news-date mb-2">
-                            <span class="bg-success text-white px-3 py-1">5 Mars 2025</span>
-                        </div>
-                        <h5 class="card-title">Nouveau partenariat avec l'industrie</h5>
-                        <p class="card-text">L'IUG signe un partenariat stratégique avec plusieurs entreprises leaders du secteur.</p>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="btn btn-link text-success p-0">Lire la suite <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-4">
-            <a href="#" class="btn btn-outline-success">Voir toutes les actualités</a>
         </div>
     </div>
-</section>
 
-<!-- Connexion Portal -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <h2 class="section-title">Plateforme <span class="text-success">IUG Connect</span></h2>
-                <p class="lead">Accédez à notre plateforme pédagogique pour une communication efficace entre professeurs et étudiants</p>
-                <ul class="list-unstyled feature-list">
-                    <li><i class="fas fa-check-circle text-success me-2"></i> Gestion des absences et notifications</li>
-                    <li><i class="fas fa-check-circle text-success me-2"></i> Partage de cours et documents pédagogiques</li>
-                    <li><i class="fas fa-check-circle text-success me-2"></i> Messagerie interne et forum de discussion</li>
-                    <li><i class="fas fa-check-circle text-success me-2"></i> Suivi pédagogique efficace</li>
-                </ul>
-                <div class="mt-4">
-                    <a href="#" class="btn btn-success me-2">Connexion</a>
-                    <a href="#" class="btn btn-outline-success">S'inscrire</a>
+
+    <section class="py-5 bg-success text-white mt-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-6 col-md-3 mb-4" data-aos="zoom-in" data-aos-duration="800">
+                    <div class="display-4 fw-bold mb-2">
+                       + <span class="counter" data-target="15">25 ans</span>                    
+                    </div>
+                    <p class="fs-5">Années d’experience dans l’enseignement</p>
+                </div>
+
+                <div class="col-6 col-md-3 mb-4" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="200">
+                    <div class="display-4 fw-bold mb-2">
+                        + <span class="counter" data-target="25">90</span>
+                    </div>
+                    <p class="fs-5"> Enseignants et personnels qualifiés</p>
+                </div>
+
+                <div class="col-6 col-md-3 mb-4" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="400">
+                    <div class="display-4 fw-bold mb-2">
+                      + <span class="counter" data-target="10">90</span>
+                    </div>
+                    <p class="fs-5">Salles de cours et un amphi de 700 places</p>
+                </div>
+
+                <div class="col-6 col-md-3 mb-4" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="600">
+                    <div class="display-4 fw-bold mb-2">
+                        + <span class="counter" data-target="95">5000</span>
+                    </div>
+                    <p class="fs-5">Etudiants inscrits chaque années</p>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="card shadow-lg">
-                    <div class="card-body p-4">
-                        <h4 class="card-title text-center mb-4">Accès rapide</h4>
-                        <form>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Votre adresse email">
+        </div>
+    </section>
+
+   
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Nos <span class="text-warning">Campus</span></h2>
+                <div class="border-bottom border-warning mx-auto mb-3" style="width: 80px; height: 3px;"></div>
+                <p class="lead mx-auto" style="max-width: 700px;">Retrouvez la liste de toutes nos écoles dans l'ensemble du territoire national</p>
+            </div>
+    
+            <div class="row g-4">
+                <!-- Service Card 1 -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100 border-0 shadow service-card">
+                        <div class="card-body p-4">
+                            <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4 mx-auto" style="width: 80px; height: 80px;">
+                                <img src="{{asset('app-assets/images/logo/esg.png')}}" alt="Professionnelle avec ordinateur" class="img-fluid rounded position-relative" style="z-index: 2;">
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Mot de passe</label>
-                                <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">
+                            <h5 class="card-title fw-bold mb-3 text-center">ESG</h5>
+                            <p class="card-text text-muted mb-3 text-center">ESG (école supérieure de gestion) est une école de l'institut universitaire du golfe de guinée qui offre des formations en cycle BTS et HND dans les filières de Gestion, Commerce-vente, Information et communication,</p>
+                            <div class="text-center mt-auto">
+                                <a href="#" class="btn btn-outline-warning rounded-pill px-4">
+                                    En savoir plus <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember">
-                                <label class="form-check-label" for="remember">Se souvenir de moi</label>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Service Card 2 -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card h-100 border-0 shadow service-card">
+                        <div class="card-body p-4">
+                            <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center mb-4 mx-auto" style="width: 80px; height: 80px;">
+                                <img src="{{asset('app-assets/images/logo/ista.png')}}" alt="Professionnelle avec ordinateur" class="img-fluid rounded position-relative" style="z-index: 2;">
                             </div>
-                            <button type="submit" class="btn btn-success w-100">Connexion</button>
-                            <div class="text-center mt-3">
-                                <a href="#" class="text-success">Mot de passe oublié?</a>
+                            <h5 class="card-title fw-bold mb-3 text-center">ISTA</h5>
+                            <p class="card-text text-muted mb-3 text-center">ISTA (Institut Supérieur des Technologies appliquées) est une école qui promeut les spécialités industrielles et technologiques tel que Génie civil, Génie électrique etc... en cours du jour et du soir pour le cycle BTS, HND.&nbsp;Des laboratoires et...</p>
+                            <div class="text-center mt-auto">
+                                <a href="#" class="btn btn-outline-warning rounded-pill px-4">
+                                    En savoir plus <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Service Card 3 -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card h-100 border-0 shadow service-card">
+                        <div class="card-body p-4">
+                            <div class="rounded-circle bg-info bg-opacity-10 d-flex align-items-center justify-content-center mb-4 mx-auto" style="width: 80px; height: 80px;">
+                                <img src="{{asset('app-assets/images/logo/isa.png')}}" alt="Professionnelle avec ordinateur" class="img-fluid rounded position-relative" style="z-index: 2;">
+                            </div>
+                            <h5 class="card-title fw-bold mb-3 text-center">ISA</h5>
+                            <p class="card-text text-muted mb-3 text-center">ISA est une école de l'institut universitaire du golfe de guinée spécialisé dans les formations en science de la santé (sciences infirmières, kinésithérapie, sage-femme, radiologie et imagerie...) en cycle BTS et HND.&nbsp;Bâtiment de haut standing,...</p>
+                            <div class="text-center mt-auto">
+                                <a href="#" class="btn btn-outline-warning rounded-pill px-4">
+                                    En savoir plus <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="#" class="btn btn-primary rounded-pill px-5 py-2">Voir tous les campus</a>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Hero Section -->
+    <!-- Section Communication Pédagogique -->
+    <section id="accueil" class="bg-success bg-gradient text-white py-5 py-md-6">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-right" data-aos-duration="1000">
+                    <h1 class="display-4 fw-bold mb-4">Votre réussite, notre mission.</h1>
+                    <p class="fs-5 mb-4">Une plateforme pédagogique moderne facilitant la communication entre étudiants et professeurs pour un apprentissage efficace et personnalisé.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        <a href="#connexion" class="btn btn-light text-success rounded-pill px-4 py-2 fw-medium animate__animated animate__pulse animate__infinite">
+                            Se connecter
+                        </a>
+                        <a href="#fonctionnalites" class="btn btn-outline-light rounded-pill px-4 py-2 fw-medium">
+                            Fonctionnalités
+                        </a>
+                    </div>
+                    <div class="row mt-5 text-center">
+                        <div class="col-4">
+                            <div class="fs-3 fw-bold">50+</div>
+                            <div class="small">Professeurs</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="fs-3 fw-bold">2000+</div>
+                            <div class="small">Étudiants</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="fs-3 fw-bold">30+</div>
+                            <div class="small">Filières</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left" data-aos-duration="1000">
+                    <img src="https://img.freepik.com/free-vector/online-learning-isometric-concept_1284-17947.jpg" alt="Communication pédagogique" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Connexion Portal -->
+   <section class="py-5 bg-light" id="fonctionnalites">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right" data-aos-duration="800">
+                    <h2 class="section-title">Plateforme <span class="text-success">Academia IUG</span></h2>
+                    <p class="lead">Accédez à notre plateforme pédagogique pour une communication efficace entre professeurs et étudiants</p>
+                    <ul class="list-unstyled feature-list">
+                        <li class="mb-3" data-aos="fade-up" data-aos-delay="100">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-bell text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="fw-bold">Gestion des absences et notifications</h5>
+                                    <p class="text-muted">Suivez les présences et recevez des alertes en temps réel</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3" data-aos="fade-up" data-aos-delay="200">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-book text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="fw-bold">Partage de cours et documents pédagogiques</h5>
+                                    <p class="text-muted">Accédez à tous vos supports de cours en un seul endroit</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3" data-aos="fade-up" data-aos-delay="300">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-comments text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="fw-bold">Messagerie interne et forum de discussion</h5>
+                                    <p class="text-muted">Communiquez facilement avec vos professeurs et camarades</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3" data-aos="fade-up" data-aos-delay="400">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-chart-line text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="fw-bold">Suivi pédagogique efficace</h5>
+                                    <p class="text-muted">Visualisez votre progression et vos résultats académiques</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="800">
+                    <div class="position-relative">
+                        <img src="https://img.freepik.com/free-vector/online-learning-concept-illustration_114360-4735.jpg" alt="Plateforme Academia" class="img-fluid rounded-lg shadow-lg">
+                        <div class="position-absolute top-0 end-0 mt-n4 me-n4">
+                            <img src="https://img.freepik.com/free-vector/mobile-learning-concept-illustration_114360-4711.jpg" alt="Mobile Learning" class="img-fluid rounded shadow-lg" style="width: 180px;" data-aos="zoom-in" data-aos-delay="300">
+                        </div>
+                        <div class="position-absolute bottom-0 start-0 mb-n4 ms-n4">
+                            <div class="bg-white rounded-lg shadow-lg p-3" data-aos="zoom-in" data-aos-delay="500">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success rounded-circle p-2 text-white">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="fw-bold mb-0">+85%</h6>
+                                        <small class="text-muted">Taux de réussite</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    @section('scripts')
+
+    <script>
+
+        
+        
+    </script>
+    @endsection
 @endsection
