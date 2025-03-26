@@ -68,9 +68,9 @@
                                 <span class="input-group-text bg-light"><i class="fas fa-user-tag text-muted"></i></span>
                                 <select id="type_compte" name="type_compte" class="form-select @error('type_compte') is-invalid @enderror" required>
                                     <option value="" selected disabled>Sélectionnez votre profil</option>
-                                    <option value="Etudiant" {{ old('type_compte') == 'Etudiant' ? 'selected' : '' }}>Étudiant</option>
-                                    <option value="Professeur" {{ old('type_compte') == 'Professeur' ? 'selected' : '' }}>Professeur</option>
-                                    <option value="Admin" {{ old('type_compte') == 'Admin' ? 'selected' : '' }}>Administration</option>
+                                    <option value="ETUDIANT" {{ old('type_compte') == 'ETUDIANT' ? 'selected' : '' }}>Étudiant</option>
+                                    <option value="PROFESSEUR" {{ old('type_compte') == 'PROFESSEUR' ? 'selected' : '' }}>Professeur</option>
+                                    <option value="ADMIN" {{ old('type_compte') == 'ADMIN' ? 'selected' : '' }}>Administration</option>
                                 </select>
                             </div>
                             @error('type_compte')
@@ -168,6 +168,15 @@
                 <div class="card-footer bg-white text-center py-3 border-top-0">
                     <p class="mb-0">Vous avez déjà un compte? <a href="{{ route('login') }}" class="text-success fw-medium">Se connecter</a></p>
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -190,11 +199,11 @@
 
             // Afficher les champs correspondants
             const selectedValue = typeCompteSelect.value;
-            if (selectedValue === 'Etudiant') {
+            if (selectedValue === 'ETUDIANT') {
                 champsEtudiant.style.display = 'block';
-            } else if (selectedValue === 'Professeur') {
+            } else if (selectedValue === 'PROFESSEUR') {
                 champsProfesseur.style.display = 'block';
-            } else if (selectedValue === 'Admin') {
+            } else if (selectedValue === 'ADMIN') {
                 champsAdmin.style.display = 'block';
             }
         }

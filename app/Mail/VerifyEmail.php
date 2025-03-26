@@ -23,7 +23,7 @@ class VerifyEmail extends Mailable
     public function __construct(User $user, $token)
     {
         $this->user = $user;
-        $this->verificationUrl = url('/verify-email/' . $token);
+        $this->verificationUrl = route('verify.email', ['token' => $token]);
     }
 
     /**

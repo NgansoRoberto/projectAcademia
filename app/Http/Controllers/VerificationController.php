@@ -14,7 +14,11 @@ class VerificationController extends Controller
         $user = User::where('remember_token', $token)->first();
 
         if (!$user) {
-            return redirect('/login')->with('error', 'Lien invalide ou expiré.');
+            return redirect()->route('login')->with('error', 'Lien de vérification invalide.');
+        }
+
+        if ($user->email_verified_at) {
+            return redirect()->route('login')->with('info', 'Email déjà vérifié.');
         }
 
         // Activer le compte

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rules\Rule;
 use App\Models\ProfessorID;
 use App\Models\StudentID;
 use App\Models\Etudiant;
@@ -14,6 +15,7 @@ use App\Mail\VerifyEmail;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -78,32 +80,40 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'type_compte' => ['required', 'in:Etudiant,Professeur,Admin'],
-            'terms' => ['required', 'accepted'],
+            'type_compte' => ['required', 'string', 'in:ETUDIANT,PROFESSEUR,ADMIN'],
         ];
 
-        // Add conditional validation rules based on account type
         if (isset($data['type_compte'])) {
-            if ($data['type_compte'] === 'Etudiant') {
-                $rules['matricule_etudiant'] = ['required', 'string'];
-                $rules['filiere_id'] = ['required', 'exists:filieres,id'];
-                $rules['niveau_id'] = ['required', 'exists:niveaux_academiques,id'];
-            } elseif ($data['type_compte'] === 'Professeur') {
-                $rules['matricule_professeur'] = ['required', 'string'];
+            if ($data['type_compte'] === 'ETUDIANT') {
+                $rules['matricule_etudiant'] = ['required', 'string', 'exists:matricules_etudiant,matricule,utilise,0'];
+                $rules['filiere_id'] = ['required', 'integer', 'exists:filieres,id'];
+                $rules['niveau_id'] = ['required', 'integer', 'exists:niveaux_academiques,id'];
+            } elseif ($data['type_compte'] === 'PROFESSEUR') {
+                $rules['matricule_professeur'] = ['required', 'string', 'exists:matricules_professeur,matricule,utilise,0'];
                 $rules['specialite'] = ['required', 'string', 'max:255'];
-            } elseif ($data['type_compte'] === 'Admin') {
-                $rules['code_admin'] = ['required', 'string'];
+            } elseif ($data['type_compte'] === 'ADMIN') {
+                $rules['code_admin'] = ['required', 'string', 'exists:code_admin,code,utilise,0'];
             }
         }
 
-        return Validator::make($data, $rules, [
-            'terms.accepted' => 'Vous devez accepter les conditions d\'utilisation.',
-            'matricule_etudiant.required' => 'Le matricule étudiant est obligatoire.',
-            'matricule_professeur.required' => 'Le matricule professeur est obligatoire.',
-            'code_admin.required' => 'Le code d\'administration est obligatoire.',
-            'filiere_id.required' => 'Veuillez sélectionner une filière.',
-            'niveau_id.required' => 'Veuillez sélectionner un niveau académique.',
-        ]);
+        $messages = [
+            'name.required' => 'Le nom est obligatoire.',
+            'email.required' => 'L\'adresse email est obligatoire.',
+            'email.email' => 'L\'adresse email n\'est pas valide.',
+            'email.unique' => 'Cette adresse email est déjà utilisée.',
+            'password.required' => 'Le mot de passe est obligatoire.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
+            'type_compte.required' => 'Le type de compte est obligatoire.',
+            'type_compte.in' => 'Le type de compte sélectionné n\'est pas valide.',
+            'matricule_etudiant.exists' => 'Le matricule étudiant n\'est pas valide ou est déjà utilisé.',
+            'matricule_professeur.exists' => 'Le matricule professeur n\'est pas valide ou est déjà utilisé.',
+            'code_admin.exists' => 'Le code administrateur n\'est pas valide ou est déjà utilisé.',
+            'filiere_id.exists' => 'La filière sélectionnée n\'existe pas.',
+            'niveau_id.exists' => 'Le niveau académique sélectionné n\'existe pas.',
+        ];
+
+        return Validator::make($data, $rules, $messages);
     }
 
     /**
@@ -114,15 +124,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         // Vérifier le type de compte et valider le matricule
-        if ($data['type_compte'] === 'Etudiant') {
+        if ($data['type_compte'] === 'ETUDIANT') {
             $matricule = StudentID::where('matricule', $data['matricule_etudiant'])->where('utilise', false)->first();
         }
-        elseif ($data['type_compte'] === 'Professeur') {
+        elseif ($data['type_compte'] === 'PROFESSEUR') {
             $matricule = ProfessorID::where('matricule', $data['matricule_professeur'])->where('utilise', false)->first();
         }
-        elseif ($data['type_compte'] === 'Administration') {
-            $matricule = AdminCode::where('code_admin', $data['code_admin'])->where('utilise', false)->first();
+        elseif ($data['type_compte'] === 'ADMIN') {
+            $matricule = AdminCode::where('code', $data['code_admin'])->where('utilise', false)->first();
         }
         else {
             $matricule = null;
@@ -133,31 +144,35 @@ class RegisterController extends Controller
                 'matricule' => ['Matricule invalide ou déjà utilisé.'],
             ]);
         }
+
+            // Généreration du token
+            $verificationToken = Str::random(64);
+
            // Créer l'utilisateur mais ne pas l'activer encore
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'type_compte' => $data['type_compte'],
-            'matricule' => $data['matricule_etudiant'] ?? $data['matricule_professeur'],
-            'remember_token' => Str::random(64), // Génère un token pour l'activation
-        ]);
-        $token = $user->remember_token;
-        // Associer l'utilisateur à sa table spécifique
-        if ($data['type_compte'] === 'etudiant') {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => $data['type_compte'],
+                'remember_token' =>  $verificationToken, // Génère un token pour l'activation
+            ]);
+
+
+            // Associer l'utilisateur à sa table spécifique
+        if ($data['type_compte'] === 'ETUDIANT') {
             Etudiant::create([
                 'user_id' => $user->id,
                 'matricule' => $data['matricule_etudiant'],
                 'filiere_id' => $data['filiere_id'],
                 'niveau_id' => $data['niveau_id'],
             ]);
-        } elseif ($data['type_compte'] === 'professeur') {
+        } elseif ($data['type_compte'] === 'PROFESSEUR') {
             Professeur::create([
                 'user_id' => $user->id,
                 'matricule' => $data['matricule_professeur'],
                 'specialite' => $data['specialite'],
             ]);
-        } elseif ($data['type_compte'] === 'admin') {
+        } elseif ($data['type_compte'] === 'ADMIN') {
             Admin::create([
                 'user_id' => $user->id,
             ]);
@@ -165,7 +180,7 @@ class RegisterController extends Controller
         // Marquer le matricule comme utilisé
         $matricule->update(['utilise' => true]);
 
-        Mail::to($user->email)->send(new VerifyEmail($user, $token));
+        Mail::to($user->email)->send(new VerifyEmail($user, $verificationToken ));
 
         // return User::create([
         //     'name' => $data['name'],
