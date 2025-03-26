@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Absence;
+use App\Models\Admin;
+use App\Models\Etudiant;
+use App\Models\Professeur;
+use App\Models\Publication;
+use App\Models\Notification;
+use App\Models\Message;
+use App\Models\GroupeDiscussion;
 
 class User extends Authenticatable
 {
@@ -70,7 +78,7 @@ class User extends Authenticatable
 
     public function messages()
     {
-        return $this->hasMany(Message::class, ', 'user_id'');
+        return $this->hasMany(Message::class, 'user_id');
     }
 
     public function groupesDiscussion()

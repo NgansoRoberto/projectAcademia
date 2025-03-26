@@ -15,13 +15,13 @@
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        
-        
+
+
     </head>
 
     <style>
@@ -208,7 +208,7 @@
             color: #3b82f6;
             transform: translateX(5px);
         }
-        
+
         /* Theme Selector */
         .theme-toggle {
             width: 38px;
@@ -220,22 +220,22 @@
             border: 1px solid #dee2e6;
             transition: all 0.3s ease;
         }
-        
+
         .theme-toggle:hover {
             background-color: #e9ecef;
         }
-        
+
         .theme-toggle .theme-icon {
             font-size: 1rem;
             color: #6c757d;
         }
-        
+
         /* Dark Theme Styles */
         body.dark-theme {
             background-color: #121212;
             color: #e0e0e0;
         }
-        
+
         body.dark-theme .navbar,
         body.dark-theme .card,
         body.dark-theme footer,
@@ -244,20 +244,20 @@
             background-color: #1e1e1e !important;
             color: #e0e0e0;
         }
-        
+
         body.dark-theme .text-dark,
         body.dark-theme .nav-link,
-        body.dark-theme h1, 
-        body.dark-theme h2, 
-        body.dark-theme h3, 
-        body.dark-theme h4, 
-        body.dark-theme h5, 
+        body.dark-theme h1,
+        body.dark-theme h2,
+        body.dark-theme h3,
+        body.dark-theme h4,
+        body.dark-theme h5,
         body.dark-theme h6,
         body.dark-theme .card-title,
         body.dark-theme footer a.text-dark {
             color: #e0e0e0 !important;
         }
-        
+
         body.dark-theme .border,
         body.dark-theme .border-top,
         body.dark-theme .border-bottom,
@@ -265,24 +265,24 @@
         body.dark-theme .border-end {
             border-color: #333 !important;
         }
-        
+
         body.dark-theme .form-control,
         body.dark-theme .input-group-text {
             background-color: #2d2d2d;
             border-color: #444;
             color: #e0e0e0;
         }
-        
+
         body.dark-theme .btn-light {
             background-color: #333;
             border-color: #444;
             color: #e0e0e0;
         }
-        
+
         body.dark-theme .text-muted {
             color: #adb5bd !important;
         }
-        
+
          .service-card:hover {
             cursor: pointer;
             transition: all 0.3s ease;
@@ -293,7 +293,7 @@
 
     <body>
         <!-- Top Bar -->
-    
+
 
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
@@ -321,10 +321,10 @@
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item me-2">
-                            <a class="nav-link" href="#">Se connecter</a>
+                            <a class="nav-link" href="{{ route('login') }}">Se connecter</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-light border rounded-pill px-3" href="#">S'inscrire</a>
+                            <a class="nav-link btn btn-light border rounded-pill px-3" href="{{ route('register') }}">S'inscrire</a>
                         </li>
                     </ul>
                     <div class="dropdown theme-selector ms-4">
@@ -342,7 +342,7 @@
         </nav>
 
 
-      
+
 
         <!-- Content -->
         <main>
@@ -397,9 +397,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <hr class="my-4 bg-dark opacity-25">
-                
+
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
                         <p class="mb-0">&copy; {{ date('Y') }} Institut Universitaire du Golfe de Guinée - Tous droits réservés.</p>
@@ -420,7 +420,7 @@
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
          <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-        
+
         <script>
 
             // Initialize AOS
@@ -450,18 +450,18 @@
                 });
             });
 
-            // fonctionalité pour changer le theme  
+            // fonctionalité pour changer le theme
             document.addEventListener('DOMContentLoaded', function() {
                 // Get theme buttons
                 const themeButtons = document.querySelectorAll('[data-theme]');
                 const themeIcon = document.querySelector('.theme-icon');
-                
+
                 // Check for saved theme preference or respect OS preference
                 const savedTheme = localStorage.getItem('theme') || 'system';
-                
+
                 // Apply theme on page load
                 applyTheme(savedTheme);
-                
+
                 // Add click event to theme buttons
                 themeButtons.forEach(button => {
                     button.addEventListener('click', () => {
@@ -470,7 +470,7 @@
                         applyTheme(theme);
                     });
                 });
-                
+
                 // Function to apply theme
                 function applyTheme(theme) {
                     if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -483,7 +483,7 @@
                         themeIcon.classList.add('fa-moon');
                     }
                 }
-                
+
                 // Listen for OS theme changes if using system preference
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
                     if (localStorage.getItem('theme') === 'system') {
@@ -492,7 +492,7 @@
                 });
             });
 
-            
+
         </script>
 
     </body>

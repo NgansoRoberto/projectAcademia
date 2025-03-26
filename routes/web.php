@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,10 @@ Route::get('/Publication', [\App\Http\Controllers\Publication::class, 'showPubli
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('iug');
+Route::get('/verify-email/{token}', [App\Http\Controllers\Auth\VerificationController::class, 'verifyEmail'])
+    ->name('verify.email');
+    // Route pour la page de notification de vérification d'email
+Route::get('/verification-email-sent', function () {
+    return view('auth.verify-notice');
+})->name('verification.notice');
+

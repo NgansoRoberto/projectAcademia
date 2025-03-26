@@ -21,7 +21,7 @@ class Professeur extends Model
 
     public function cours()
     {
-        return $this->hasMany(Cours::class, professeur_id);
+        return $this->hasMany(Cours::class, 'professeur_id');
     }
 
     public function absences()
