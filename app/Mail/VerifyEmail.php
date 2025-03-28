@@ -16,6 +16,7 @@ class VerifyEmail extends Mailable
 
     public $user;
     public $verificationUrl;
+    public $token;
 
     /**
      * Create a new message instance.
@@ -23,6 +24,8 @@ class VerifyEmail extends Mailable
     public function __construct(User $user, $token)
     {
         $this->user = $user;
+        $this->token = $token;
+
         $this->verificationUrl = route('verify.email', ['token' => $token]);
     }
 

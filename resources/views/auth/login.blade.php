@@ -68,6 +68,11 @@
                 <div class="card-footer bg-white text-center py-3 border-top-0">
                     <p class="mb-0">Vous n'avez pas de compte? <a href="{{ route('register') }}" class="text-success fw-medium">Créer un compte</a></p>
                 </div>
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>

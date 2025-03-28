@@ -87,10 +87,8 @@ class RegisterController extends Controller
             if ($data['type_compte'] === 'ETUDIANT') {
                 $rules['matricule_etudiant'] = ['required', 'string', 'exists:matricules_etudiant,matricule,utilise,0'];
                 $rules['filiere_id'] = ['required', 'integer', 'exists:filieres,id'];
-                $rules['niveau_id'] = ['required', 'integer', 'exists:niveaux_academiques,id'];
             } elseif ($data['type_compte'] === 'PROFESSEUR') {
                 $rules['matricule_professeur'] = ['required', 'string', 'exists:matricules_professeur,matricule,utilise,0'];
-                $rules['specialite'] = ['required', 'string', 'max:255'];
             } elseif ($data['type_compte'] === 'ADMIN') {
                 $rules['code_admin'] = ['required', 'string', 'exists:code_admin,code,utilise,0'];
             }
@@ -110,7 +108,6 @@ class RegisterController extends Controller
             'matricule_professeur.exists' => 'Le matricule professeur n\'est pas valide ou est déjà utilisé.',
             'code_admin.exists' => 'Le code administrateur n\'est pas valide ou est déjà utilisé.',
             'filiere_id.exists' => 'La filière sélectionnée n\'existe pas.',
-            'niveau_id.exists' => 'Le niveau académique sélectionné n\'existe pas.',
         ];
 
         return Validator::make($data, $rules, $messages);
@@ -145,8 +142,9 @@ class RegisterController extends Controller
             ]);
         }
 
-            // Généreration du token
-            $verificationToken = Str::random(64);
+
+            // Génération d'un token de vérification plus robuste
+            $verificationToken = hash_hmac('sha256', Str::random(40), config('app.key'));
 
            // Créer l'utilisateur mais ne pas l'activer encore
             $user = User::create([
@@ -154,23 +152,23 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'role' => $data['type_compte'],
-                'remember_token' =>  $verificationToken, // Génère un token pour l'activation
+                'email_verification_token' =>  $verificationToken, // Génère un token pour l'activation
             ]);
+
+
 
 
             // Associer l'utilisateur à sa table spécifique
         if ($data['type_compte'] === 'ETUDIANT') {
             Etudiant::create([
                 'user_id' => $user->id,
-                'matricule' => $data['matricule_etudiant'],
+                'matricule_etudiant' => $data['matricule_etudiant'],
                 'filiere_id' => $data['filiere_id'],
-                'niveau_id' => $data['niveau_id'],
             ]);
         } elseif ($data['type_compte'] === 'PROFESSEUR') {
             Professeur::create([
                 'user_id' => $user->id,
                 'matricule' => $data['matricule_professeur'],
-                'specialite' => $data['specialite'],
             ]);
         } elseif ($data['type_compte'] === 'ADMIN') {
             Admin::create([
@@ -180,13 +178,9 @@ class RegisterController extends Controller
         // Marquer le matricule comme utilisé
         $matricule->update(['utilise' => true]);
 
-        Mail::to($user->email)->send(new VerifyEmail($user, $verificationToken ));
+        Mail::to($user->email)->send(new VerifyEmail($user, $verificationToken));
 
-        // return User::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($data['password']),
-        // ]);
+      
         return $user; // Retourner l'utilisateur cré
     }
 }

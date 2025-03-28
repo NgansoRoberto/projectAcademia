@@ -14,18 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/Publication', [\App\Http\Controllers\Publication::class, 'showPublication'])->name('Publication');
 
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('iug');
 Route::get('/verify-email/{token}', [App\Http\Controllers\VerificationCompteController::class, 'verifyEmail'])
-    ->name('verify.email');
+->name('verify.email');
     // Route pour la page de notification de vérification d'email
 Route::get('/verification-email-sent', function () {
     return view('auth.verify-notice');
 })->name('verification.notice');
 
+// Routes protégées par l'authentification
+Route::middleware(['auth', 'verified.email'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    // Vous pouvez ajouter d'autres routes protégées ici
+    // Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+    // Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
+});
