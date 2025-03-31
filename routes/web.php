@@ -18,7 +18,7 @@ Route::get('/Publication', [\App\Http\Controllers\Publication::class, 'showPubli
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('iug');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome'])->name('iug');
 Route::get('/verify-email/{token}', [App\Http\Controllers\VerificationCompteController::class, 'verifyEmail'])
 ->name('verify.email');
     // Route pour la page de notification de vérification d'email
@@ -30,7 +30,6 @@ Route::get('/verification-email-sent', function () {
 Route::middleware(['auth', 'verified.email'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    // Vous pouvez ajouter d'autres routes protégées ici
-    // Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
-    // Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
+    // route pour les admin
+    Route::resource('ManagerProfessor', 'App\Http\Controllers\admin\gestionsProf\GestionProfController');
 });

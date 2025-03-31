@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('toast_success')) {
+    if (!function_exists('toast_success')) {
         function toast_success($message)
         {
             session()->flash('toast', [
@@ -73,5 +73,13 @@ if (!function_exists('toast_success')) {
 
             // Combiner les initiales et les convertir en majuscules
             return strtoupper($firstNameInitial);
+        }
+    }
+    if (!function_exists('Ladate')) {
+        function Ladate($ladate) {
+            $mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Decembre'];
+            // $mois = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            $ladate = new DateTime($ladate);
+            return $ladate->format('d').' '.$mois[$ladate->format('m')-1].' '.$ladate->format('Y');
         }
     }

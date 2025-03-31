@@ -598,6 +598,7 @@ footer.footer-border {
   color : #625F6E;
   padding : 10px 15px 10px 15px;
   line-height : 1.45;
+  font-size: 15px;
 }
 
 .main-menu.menu-light .navigation li a span.menu-sub-title {

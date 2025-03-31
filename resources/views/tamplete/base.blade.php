@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
     <meta name="description" content="Shop manager vous permet de gérer votre boutique de manière optimale. Par Honowa Technologies">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Herp</title>
+    <title>@yield('title', 'Academia-IUG-Dashboard')</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
@@ -96,7 +96,7 @@ use Illuminate\Support\Facades\Auth;
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name font-weight-bolder">{{Auth::user()->name}}</span>
-                            <span class="user-status badge badge-light-dark round">{{Auth::user()->type}}</span>
+                            <span class="user-status badge badge-light-dark round">{{Auth::user()->role}}</span>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="options" class="avatar">
                             <span class="avatar-content bg-dark" style="width:37px; height:37px;">
@@ -253,6 +253,7 @@ use Illuminate\Support\Facades\Auth;
         })
 
         const element = document.querySelector('body');
+        const footer = document.querySelector('footer');
 
         function hasVerticalScrollbar(element) {
             return element.scrollHeight > element.clientHeight;
@@ -261,70 +262,22 @@ use Illuminate\Support\Facades\Auth;
         if (!hasVerticalScrollbar(element)) {
             footer.classList.remove('footer-hidden');
         }
-        
-        window.addEventListener('scroll', function() {
-            const footer = document.querySelector('footer');
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            const scrollTop = window.scrollY;
 
-            if (scrollTop + windowHeight >= documentHeight) {
-                footer.classList.remove('footer-hidden');
-                footer.classList.remove('footer-fixed');
-                footer.classList.add('footer-relative');
+        window.addEventListener('scroll', function() {
+            if (footer) {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.scrollY;
+
+                if (scrollTop + windowHeight >= documentHeight) {
+                    footer.classList.remove('footer-hidden');
+                    footer.classList.remove('footer-fixed');
+                    footer.classList.add('footer-relative');
+                }
             }
         });
 
-        $(window).on('load', function() {
-            if (feather) {
-                feather.replace({
-                    width: 14,
-                    height: 14
-                });
-            }
-            
-            @if(session()->has('message'))
-                toastr['success'](
-                    "{!!session()->get('message')!!}",
-                    'Succès',
-                    {
-                        closeButton: true,
-                        tapToDismiss: true
-                    }
-                );
-            @endif
-        })
-        
-        function confirmation(message = 'Confirmer ?',id_form = undefined) {
-            Swal.fire({
-                icon: 'warning',
-                html: '<h4 class="text-center my-1">'+message+'<h4>',
-                showCloseButton: true,
-                showCancelButton: true,
-                focusConfirm: true, // Don't autofocus the confirm button
-                confirmButtonText: feather.icons['check'].toSvg({ class: 'font-medium-2' }),
-                cancelButtonText: feather.icons['x'].toSvg({ class: 'font-medium-2' }),
-                allowOutsideClick: true,
-                customClass: {
-                    confirmButton: 'btn btn-success mx-auto my-1',
-                    cancelButton: 'btn btn-danger mx-auto my-1'
-                },
-                showClass: {
-                    popup: 'animate__animated animate__bounceIn'
-                },
-                buttonsStyling: false,
-                preConfirm: (result) => {
-                    return result.isConfirmed;
-                }
-            })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    if (id_form != undefined) {
-                        $('#'+id_form).submit();
-                    }
-                }
-            });
-        }
+       
     </script>
 </body>
 <!-- END: Body-->

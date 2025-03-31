@@ -1,4 +1,4 @@
-@extends('layouts_comptes.app')
+@extends('tamplete.base')
 
 @section('contenu')
 
@@ -11,7 +11,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class=" float-left mb-0">Statistiques générales</h2>
+                            <h2 class=" float-left mb-0 font-weight-bolder ">Dashboard</h2>
                         </div>
                     </div>
                 </div>
