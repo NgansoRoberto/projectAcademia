@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between align-items-center px-2">
         <div class="text-muted">
             <span class="fw-semibold">Page {{ $paginator->currentPage() }}</span> sur {{ $paginator->lastPage() }}
-            <span class="ms-1">(Total: {{ $paginator->total() }} professeur)</span>
+            <span class="ms-1">(Total: {{ $paginator->total() }} elements)</span>
         </div>
         <nav class="ms-4">
             <ul class="pagination mb-0">

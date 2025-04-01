@@ -14,7 +14,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home')}}">Acceuil</a></li>
                                 <li class="breadcrumb-item active">Gestion Prof</li>
-                                <li class="breadcrumb-item active">Nouveau Professeur</li>
+                                <li class="breadcrumb-item active">Ajouter</li>
                             </ol>
                         </div>
                     </div>
@@ -114,6 +114,7 @@
 
     <script>
         // Gestion du compteur de caractères pour le matricule
+        document.getElementById('add_professeur').className += 'active'
         document.addEventListener('DOMContentLoaded', function() {
             const matriculeInput = document.getElementById('matricule');
             const matriculeCounter = document.getElementById('matricule-counter');

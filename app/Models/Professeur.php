@@ -24,6 +24,12 @@ class Professeur extends Model
         return $this->hasMany(Cours::class, 'professeur_id');
     }
 
+    public function filieres()
+    {
+        return $this->belongsToMany(Filiere::class, 'filiere_id');
+    }
+    
+
     public function absences()
     {
         return $this->hasMany(Absence::class, 'professeur_id');

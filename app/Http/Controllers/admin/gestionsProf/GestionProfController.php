@@ -118,7 +118,8 @@ class GestionProfController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $professeur = Professeur::with('user')->findOrFail($id);
+        return view('admin.pages.prof.edit', compact('professeur'));
     }
 
     /**
@@ -126,7 +127,85 @@ class GestionProfController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $professeur = Professeur::with('user')->findOrFail($id);
+        
+        // Validation des données
+        $validationRules = [
+            'nom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $professeur->user->id,
+        ];
+        
+        
+        if ($request->matricule != str_replace('IugProf-', '', $professeur->matricule)) {
+            $validationRules['matricule'] = 'required|string|max:9|unique:professeurs,matricule,' . $professeur->id;
+        }
+        
+        
+        if ($request->filled('password')) {
+            $validationRules['password'] = 'string|min:8';
+        }
+        
+        $validator = Validator::make($request->all(), $validationRules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            
+            $user = $professeur->user;
+            $user->name = $request->nom;
+            $user->email = $request->email;
+            
+           
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+            
+            $user->save();
+
+            
+            if ($request->matricule != str_replace('IugProf-', '', $professeur->matricule)) {
+                $oldMatricule = $professeur->matricule;
+                $newMatricule = 'IugProf-' . strtoupper($request->matricule);
+                
+                
+                $professeur->matricule = $newMatricule;
+                
+                
+                $matriculeExist = MatriculeProfesseur::where('matricule', $newMatricule)->first();
+                
+                if ($matriculeExist) {
+                    $matriculeExist->utilise = 1;
+                    $matriculeExist->save();
+                } else {
+                    $matricule = new MatriculeProfesseur();
+                    $matricule->matricule = $newMatricule;
+                    $matricule->utilise = 1;
+                    $matricule->save();
+                }
+                
+                
+                $oldMatriculeRecord = MatriculeProfesseur::where('matricule', $oldMatricule)->first();
+                if ($oldMatriculeRecord) {
+                    $oldMatriculeRecord->utilise = 0;
+                    $oldMatriculeRecord->save();
+                }
+            }
+            
+            $professeur->save();
+
+            DB::commit();
+
+            return redirect()->route('ManagerProfessor.index')->with('toast', ['type' => 'success', 'message' => 'Professeur mis à jour avec succès!']);
+        } catch (\Exception $e) {
+            
+            DB::rollBack();
+            
+            return redirect()->back()->with('toast', ['type' => 'error', 'message' => 'Une erreur est survenue: ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**

@@ -117,21 +117,53 @@
             </li>
 
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='user'></i></i><span class="menu-title text-truncate" data-i18n="User">Gestion Prof</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='user'></i></i><span class="menu-title text-truncate" data-i18n="User">Gestion Professeur</span></a>
                 <ul class="menu-content">
 
-                    <li id="add_projet">
+                    <li id="add_professeur">
                         <a class="d-flex align-items-center" href="{{route('ManagerProfessor.create')}}">
-                            <i data-feather="list"></i>
+                            <i data-feather="plus"></i>
                             <span class="menu-item" data-i18n="List">
-                                Créer un nouveau
+                                Ajouter
                             </span>
                         </a>
                     </li>
 
 
-                    <li id="list_projet">
+                    <li id="list_professeur">
                         <a class="d-flex align-items-center" href="{{route('ManagerProfessor.index')}}">
+                            <i data-feather="list"></i>
+                            <span class="menu-item" data-i18n="Edit">
+                                List
+                            </span>
+                        </a>
+                    </li>
+
+                       <li id="associer_prof" class=" nav-item">
+                            <a class="d-flex align-items-center" href="{{route('FiliereProfesseur.showAttributionForm')}}">
+                                <i data-feather="git-commit"></i>
+                                <span class="menu-item" data-i18n="List"> Attribuer une Filière</span>
+                            </a>
+                        </li>
+                    <br>
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='user'></i></i><span class="menu-title text-truncate" data-i18n="User">Gestion Etudiant</span></a>
+                <ul class="menu-content">
+
+                    <li id="add_etudiant">
+                        <a class="d-flex align-items-center" href="{{route('ManagerEtudiant.create')}}">
+                            <i data-feather="plus"></i>
+                            <span class="menu-item" data-i18n="List">
+                                Ajouter
+                            </span>
+                        </a>
+                    </li>
+
+
+                    <li id="list_etudiant">
+                        <a class="d-flex align-items-center" href="{{route('ManagerEtudiant.index')}}">
                             <i data-feather="list"></i>
                             <span class="menu-item" data-i18n="Edit">
                                 List
@@ -141,9 +173,6 @@
                     <br>
                 </ul>
             </li>
-          
-
-
 
         </ul>
     </div>

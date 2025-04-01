@@ -1,6 +1,6 @@
 @extends('tamplete.base')
 @section('title')
-    {{'Tous les Professeurs'}}
+    {{'Tous les Étudiants'}}
 @endsection
 
 @section('contenu')
@@ -12,12 +12,12 @@
             <div class="content-header-left col-md-12 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title font-weight-bolder float-left mb-0">{{ __('Liste des Professeurs ') }}</h2>
+                        <h2 class="content-header-title font-weight-bolder float-left mb-0">{{ __('Liste des Étudiants') }}</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Accueil') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('Gestion Prof') }}</li>
-                                <li class="breadcrumb-item active">{{ __('List') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Gestion Étudiant') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Liste') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -31,20 +31,19 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div class="col-md-6">
-                                <form action="{{ route('ManagerProfessor.index') }}" method="GET" class="d-flex">
+                                <form action="{{ route('ManagerEtudiant.index') }}" method="GET" class="d-flex">
                                     <div class="input-group input-group-merge mb-2">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon-search2"><i data-feather="search"></i></span>
                                         </div>
                                         <input type="text" class="form-control" placeholder="Rechercher..." name="search" value="{{ $search ?? '' }}" aria-label="Search..." aria-describedby="basic-addon-search2" />
-
                                     </div>
                                 </form>
                             </div>
                             <div>
-                                <a href="{{ route('ManagerProfessor.create') }}" style="background:#d87e46;" class="btn waves-effect waves-float waves-light">
+                                <a href="{{ route('ManagerEtudiant.create') }}" style="background:#d87e46;" class="btn waves-effect waves-float waves-light">
                                     <i data-feather="plus" class="mr-25 text-white"></i>
-                                    <span class="text-white">Ajouter un professeur</span>
+                                    <span class="text-white">Ajouter un étudiant</span>
                                 </a>
                             </div>
                         </div>
@@ -62,37 +61,50 @@
                                             <th>Nom</th>
                                             <th>Email</th>
                                             <th>Matricule</th>
-
-                                            <th>Date de creation</th>
+                                            <th>Filière</th>
+                                            <th>Groupe</th>
+                                            <th>Date de création</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($professeurs as $professeur)
+                                        @forelse($etudiants as $etudiant)
                                             <tr>
-                                                <td>{{ $professeur->user->name }}</td>
-                                                <td>{{ $professeur->user->email }}</td>
-                                                <td><span class="badge badge-pill badge-glow badge-secondary"> {{ $professeur->matricule }}</span></td>
-                                                <td>{{ Ladate($professeur->created_at) }}</td>
-                                                 
-
+                                                <td>{{ $etudiant->user->name ?? 'Non assigné'}}</td>
+                                                <td>{{ $etudiant->user->email ?? 'Non assigné'}}</td>
+                                                <td><span class="badge badge-pill badge-glow badge-secondary"> {{ $etudiant->matricule_etudiant }}</span></td>
+                                                <td>{{ $etudiant->filiere->nom ?? 'Non assigné' }}</td>
+                                                <td>{{ $etudiant->groupe->nom ?? 'Non assigné' }}</td>
+                                                <td>{{ Ladate($etudiant->created_at) }}</td>
                                                 <td class="actions-cell">
                                                     <div class="dropdown">
                                                         <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                                                             <i data-feather="more-vertical"></i>
                                                         </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="{{ route('ManagerProfessor.edit', $professeur) }}">
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="{{ route('ManagerEtudiant.show', $etudiant) }}">
+                                                                <i data-feather="eye" class="mr-50"></i>
+                                                                <span>Voir détails</span>
+                                                            </a>
+                                                            <a class="dropdown-item" href="{{ route('ManagerEtudiant.edit', $etudiant) }}">
                                                                 <i data-feather="edit-2" class="mr-50"></i>
                                                                 <span>Modifier</span>
                                                             </a>
+                                                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer cet étudiant?')) document.getElementById('delete-form-{{ $etudiant->id }}').submit();">
+                                                                <i data-feather="trash" class="mr-50"></i>
+                                                                <span>Supprimer</span>
+                                                            </a>
+                                                            <form id="delete-form-{{ $etudiant->id }}" action="{{ route('ManagerEtudiant.destroy', $etudiant->id) }}" method="POST" style="display: none;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="9" class="text-center text-danger">Aucun Professeur Trouvé !</td>
+                                                <td colspan="7" class="text-center text-danger">Aucun Étudiant Trouvé !</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -100,7 +112,7 @@
                             </div>
                         </div>
                         <div class=" p-3">
-                            {{ $professeurs->appends(['search' => $search])->links('searchs.search') }}
+                            {{ $etudiants->appends(['search' => $search])->links('searchs.search') }}
                         </div>
                     </div>
                 </div>
@@ -189,14 +201,20 @@
         border: 1px solid #D8D6DE;
         border-radius: 0.357rem;
     }
+    
 </style>
 @endsection
 
 @section('javascript')
     <script type="text/javascript">
-
-        document.getElementById('list_professeur').className += 'active'
-       
+        document.getElementById('list_etudiant').className += 'active'
+        // Réinitialiser les icônes Feather après chaque changement de page
+        if (feather) {
+            feather.replace({
+                width: 14,
+                height: 14
+            });
+        }
         @if(session()->has('toast'))
             toastr['{{ session('toast.type') }}']('{{ session('toast.message') }}',{
                 closeButton: true,
@@ -204,8 +222,5 @@
                 rtl: false
             });
         @endif
-
-           
-
     </script>
 @endsection

@@ -14,11 +14,7 @@ return new class extends Migration
         Schema::table('etudiants', function (Blueprint $table) {
             $table->unsignedBigInteger('niveau_id')->nullable()->after('groupe_id');
 
-            $table->foreign('niveau_id')
-                  ->references('id')
-                  ->on('niveaux_academiques')
-                  ->onDelete('set null')
-                  ->onUpdate('cascade');
+            $table->foreign('niveau_id')->references('id')->on('niveaux_academiques')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

@@ -83,3 +83,12 @@
             return $ladate->format('d').' '.$mois[$ladate->format('m')-1].' '.$ladate->format('Y');
         }
     }
+    function getCodeColor($userId)
+    {
+        $colors = [
+            '#FF5630', '#FF8B00', '#FFC400', '#36B37E',
+            '#00B8D9', '#6554C0', '#8777D9', '#998DD9',
+            '#4C9AFF', '#2684FF', '#0065FF', '#57D9A3'
+        ];
+        return $colors[$userId % count($colors)];
+    }

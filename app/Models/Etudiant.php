@@ -11,24 +11,24 @@ class Etudiant extends Model
 
     protected $fillable = [
         'matricule_etudiant',
-        'id_user',
+        'user_id',
         'filiere_id',
         'groupe_id',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function filiere()
     {
-        return $this->belongsTo(Filiere::class);
+        return $this->belongsTo(Filiere::class, 'filiere_id');
     }
 
     public function groupe()
     {
-        return $this->belongsTo(Groupe::class, 'filiere_id');
+        return $this->belongsTo(Groupe::class, 'groupe_id');
     }
 
     public function absences()

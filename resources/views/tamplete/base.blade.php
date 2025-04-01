@@ -65,6 +65,10 @@ use Illuminate\Support\Facades\Auth;
      body {
             font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
+         .active a{
+            background :#d87e46 !important;
+            border-radius: 4px !important;
+        }
         
     </style>
 
@@ -99,7 +103,7 @@ use Illuminate\Support\Facades\Auth;
                             <span class="user-status badge badge-light-dark round">{{Auth::user()->role}}</span>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="options" class="avatar">
-                            <span class="avatar-content bg-dark" style="width:37px; height:37px;">
+                            <span class="avatar-content" style="width:37px; height:37px; background:{{getCodeColor(Auth::user()->id)}}">
                                 @php
                                     $nom = get_initials(Auth::user()->name);
                                     echo "<span class='text-light'> $nom </span>"
@@ -115,7 +119,7 @@ use Illuminate\Support\Facades\Auth;
 
                         <form id="logout-form2" action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button class="dropdown-item" data-toggle="tooltip" data-placement="bottom" title="Disconnect" type="submit">
+                            <button class="dropdown-item" data-toggle="tooltip" data-placement="bottom" title="Se deconnecter" type="submit">
                                 <i class="mr-50" data-feather="power"></i> Logout
                             </button>
                         </form>
@@ -123,7 +127,7 @@ use Illuminate\Support\Facades\Auth;
                         <li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button class="btn btn-icon" id="logout-button" data-toggle="tooltip" data-placement="bottom" title="Disconnect" style="margin-bottom:0px !important;">
+                                <button class="btn btn-icon" id="logout-button" data-toggle="tooltip" data-placement="bottom" title="Se deconnecter" style="margin-bottom:0px !important;">
                                     <i class="redable" data-feather="power" style="width: 25px; height: 25px"></i>
                                 </button>
                             </form>
@@ -223,12 +227,12 @@ use Illuminate\Support\Facades\Auth;
 
             Swal.fire({
                 icon: 'warning',
-                title: 'You are about to log out',
-                text: 'Are you sure you want to continue ?',
+                title: 'Vous êtes sur le point de vous déconnecter',
+                text: 'Êtes-vous sûr de vouloir continuer ?',
                 showCloseButton: true,
                 showCancelButton: true,
-                cancelButtonText: 'No',
-                confirmButtonText: 'Yes',
+                cancelButtonText: 'Non',
+                confirmButtonText: 'Oui',
                 reverseButtons: false, // Garde le bouton de confirmation à droite
                 customClass: {
                     cancelButton: 'btn btn-secondary ml-2',
@@ -252,30 +256,30 @@ use Illuminate\Support\Facades\Auth;
             }
         })
 
-        const element = document.querySelector('body');
-        const footer = document.querySelector('footer');
+        // const element = document.querySelector('body');
+        // const footer = document.querySelector('footer');
 
-        function hasVerticalScrollbar(element) {
-            return element.scrollHeight > element.clientHeight;
-        }
+        // function hasVerticalScrollbar(element) {
+        //     return element.scrollHeight > element.clientHeight;
+        // }
 
-        if (!hasVerticalScrollbar(element)) {
-            footer.classList.remove('footer-hidden');
-        }
+        // if (!hasVerticalScrollbar(element)) {
+        //     footer.classList.remove('footer-hidden');
+        // }
 
-        window.addEventListener('scroll', function() {
-            if (footer) {
-                const windowHeight = window.innerHeight;
-                const documentHeight = document.documentElement.scrollHeight;
-                const scrollTop = window.scrollY;
+        // window.addEventListener('scroll', function() {
+        //     if (footer) {
+        //         const windowHeight = window.innerHeight;
+        //         const documentHeight = document.documentElement.scrollHeight;
+        //         const scrollTop = window.scrollY;
 
-                if (scrollTop + windowHeight >= documentHeight) {
-                    footer.classList.remove('footer-hidden');
-                    footer.classList.remove('footer-fixed');
-                    footer.classList.add('footer-relative');
-                }
-            }
-        });
+        //         if (scrollTop + windowHeight >= documentHeight) {
+        //             footer.classList.remove('footer-hidden');
+        //             footer.classList.remove('footer-fixed');
+        //             footer.classList.add('footer-relative');
+        //         }
+        //     }
+        // });
 
        
     </script>

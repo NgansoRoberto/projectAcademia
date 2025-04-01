@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\gestionsProf\FiliereProfesseurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,9 @@ Route::middleware(['auth', 'verified.email'])->group(function () {
 
     // route pour les admin
     Route::resource('ManagerProfessor', 'App\Http\Controllers\admin\gestionsProf\GestionProfController');
+    Route::resource('ManagerEtudiant', 'App\Http\Controllers\admin\gestionsEtudiant\GestionEtudiantController');
+    Route::get('/professeurs/attribute-filiere', [FiliereProfesseurController::class, 'showAttributionForm'])->name('FiliereProfesseur.showAttributionForm');
+    Route::post('/professeurs/check-attribution', [FiliereProfesseurController::class, 'checkAttribution'])->name('FiliereProfesseur.checkAttribution');
+    Route::post('/professeurs/attribute-classe', [FiliereProfesseurController::class, 'attributeClasse'])->name('FiliereProfesseur.attributeClasse');
+    Route::delete('/professeurs/remove-attribution', [FiliereProfesseurController::class, 'removeAttribution'])->name('FiliereProfesseur.removeAttribution');
 });
