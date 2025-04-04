@@ -11,12 +11,31 @@ class Notification extends Model
 
     protected $fillable = [
         'message',
-        'user_id',
+        'sujet',
         'date',
+        'expediteur_id',
+        'filiere_id',
+        'cours_id',
+        'statut',
+        'user_id',
     ];
 
-    public function user()
+    protected $table = 'notifications';
+
+    public function filiere()
+    {
+        return $this->belongsTo(Filiere::class, 'filiere_id');
+    }
+    public function user_send()
+    {
+        return $this->belongsTo(User::class, 'expediteur_id');
+    }
+    public function user_receive()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function cour()
+    {
+        return $this->belongsTo(Cours::class, 'cours_id');
     }
 }

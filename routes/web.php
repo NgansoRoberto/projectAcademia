@@ -42,4 +42,9 @@ Route::middleware(['auth', 'verified.email'])->group(function () {
 
     //Route pour les professeurs
     Route::resource('ManagerCour', 'App\Http\Controllers\prof\GestionCours\CourController');
+
+
+
+    //Route pour les professeurs
+    
 });
