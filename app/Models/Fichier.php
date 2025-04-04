@@ -14,10 +14,16 @@ class Fichier extends Model
         'chemin',
         'type',
         'cours_id',
+        'seances_id',
+        'chemin_fichier',
     ];
 
-    public function cours()
+    public function cour()
     {
-        return $this->belongsTo(Cours::class);
+        return $this->belongsTo(Cours::class, 'cours_id');
+    }
+    public function seance()
+    {
+        return $this->belongsTo(SeanceCour::class, 'seances_id');
     }
 }

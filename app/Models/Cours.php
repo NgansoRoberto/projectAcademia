@@ -14,6 +14,10 @@ class Cours extends Model
         'description',
         'professeur_id',
         'date_creation',
+        'filiere_id',
+        'nombres_seances',
+        'statut',
+        'type',
     ];
 
     public function professeur()
@@ -21,13 +25,16 @@ class Cours extends Model
         return $this->belongsTo(Professeur::class, 'professeur_id');
     }
 
-    public function fichiers()
+    public function filiere()
     {
-        return $this->hasMany(Fichier::class);
+        return $this->belongsTo(Filiere::class, 'filiere_id');
     }
 
     public function absences()
     {
         return $this->hasMany(Absence::class);
+    }
+    public function seances() {
+        return $this->hasMany(SeanceCour::class);
     }
 }

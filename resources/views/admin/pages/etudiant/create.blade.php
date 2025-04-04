@@ -25,13 +25,13 @@
                     </div>
                 </div>
             </div>
-            
+
             @if(session()->has('success'))
                 <div class="alert alert-success">
                     {{ session()->get('success')}}
                 </div>
             @endif
-            
+
             <div class="content-body">
                 <section id="multiple-column-form">
                     <div class="row">
@@ -49,7 +49,7 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            
+
                                             <div class="col-md-6 py-1">
                                                 <label for="email">Email <span class="text-danger">*</span></label>
                                                 <input type="email" placeholder="exemple@email.com" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}" required>
@@ -79,10 +79,10 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            
+
                                             <div class="col-md-6 py-1">
                                                 <label for="filiere_id">Filière <span class="text-danger">*</span></label>
-                                                <select id="filiere_id" name="filiere_id" class="form-control @error('filiere_id') is-invalid @enderror" required>
+                                                <select id="filiere_id" name="filiere_id" class="select2 form-control @error('filiere_id') is-invalid @enderror" required>
                                                     <option value="">Sélectionner une filière</option>
                                                     @foreach($filieres as $filiere)
                                                         <option value="{{ $filiere->id }}" {{ old('filiere_id') == $filiere->id ? 'selected' : '' }}>
@@ -94,10 +94,10 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            
+
                                             <div class="col-md-6 py-1">
                                                 <label for="groupe_id">Groupe <span class="text-info">[Optionnel]</span></label>
-                                                <select id="groupe_id" name="groupe_id" class="form-control @error('groupe_id') is-invalid @enderror" required>
+                                                <select id="groupe_id" name="groupe_id" class="form-control @error('groupe_id') is-invalid @enderror">
                                                     <option value="">Sélectionner un groupe</option>
                                                     @foreach($groupes as $groupe)
                                                         <option value="{{ $groupe->id }}" {{ old('groupe_id') == $groupe->id ? 'selected' : '' }}>
@@ -146,15 +146,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             const matriculeInput = document.getElementById('matricule');
             const matriculeCounter = document.getElementById('matricule-counter');
-            
+
             matriculeInput.addEventListener('input', function() {
                 if (this.value.length > 10) {
                     this.value = this.value.substring(0, 10);
-                }         
-                
+                }
+
                 const currentLength = this.value.length;
                 matriculeCounter.textContent = `${currentLength}/10 caractères`;
-                
+
                 if (currentLength === 0) {
                     matriculeCounter.classList.remove('text-success');
                     matriculeCounter.classList.add('text-muted');
@@ -163,9 +163,9 @@
                     matriculeCounter.classList.add('text-success');
                 } else {
                     matriculeCounter.classList.remove('text-success');
-                    matriculeCounter.classList.add('text-muted'); 
+                    matriculeCounter.classList.add('text-muted');
                 }
-                
+
                 this.value = this.value.toUpperCase();
             });
         });

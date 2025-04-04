@@ -20,7 +20,7 @@ class GestionEtudiantController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        
+
         $query = Etudiant::with(['user', 'filiere', 'groupe'])->when($search, function ($query) use ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('matricule_etudiant', 'like', "%{$search}%")
@@ -36,11 +36,11 @@ class GestionEtudiantController extends Controller
                     });
             });
         });
-        $etudiants = $query->orderBy('created_at', 'desc')->paginate(5); 
+        $etudiants = $query->orderBy('created_at', 'desc')->paginate(5);
         if ($search) {
             $etudiants->appends(['search' => $search]);
         }
-        
+
         return view('admin.pages.etudiant.index', compact('etudiants', 'search'));
     }
 
@@ -66,7 +66,7 @@ class GestionEtudiantController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'filiere_id' => 'required|exists:filieres,id',
-            'groupe_id' => 'exists:groupes,id',
+            // 'groupe_id' => 'exists:groupes,id',
         ]);
 
         if ($validator->fails()) {
@@ -74,19 +74,19 @@ class GestionEtudiantController extends Controller
         }
 
         try {
-           
+
             DB::beginTransaction();
 
-            
+
             $user = new User();
             $user->name = $request->nom;
             $user->email = $request->email;
-            $user->password = Hash::make($request->password); 
+            $user->password = Hash::make($request->password);
             $user->role = 'ETUDIANT';
-            $user->email_verified_at = now();	
+            $user->email_verified_at = now();
             $user->save();
 
-            
+
             $etudiant = new Etudiant();
             $etudiant->user_id = $user->id;
             $etudiant->matricule_etudiant = strtoupper($request->matricule);
@@ -98,9 +98,9 @@ class GestionEtudiantController extends Controller
 
             return redirect()->route('ManagerEtudiant.index')->with('toast', ['type' => 'success', 'message' => 'Étudiant créé avec succès!']);
         } catch (\Exception $e) {
-            
+
             DB::rollBack();
-            
+
             return redirect()->back()->with('toast', ['type' => 'error', 'message' => 'Une erreur est survenue: ' . $e->getMessage()])->withInput();
         }
     }
@@ -131,25 +131,25 @@ class GestionEtudiantController extends Controller
     public function update(Request $request, string $id)
     {
         $etudiant = Etudiant::with('user')->findOrFail($id);
-        
-        
+
+
         $validationRules = [
             'nom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $etudiant->user->id,
             'filiere_id' => 'required|exists:filieres,id',
-            'groupe_id' => 'exists:groupes,id',
+            // 'groupe_id' => 'exists:groupes,id',
         ];
-        
-      
+
+
         if ($request->matricule != $etudiant->matricule_etudiant) {
             $validationRules['matricule'] = 'required|string|max:10|unique:etudiants,matricule_etudiant,' . $etudiant->id;
         }
-        
-        
+
+
         if ($request->filled('password')) {
             $validationRules['password'] = 'string|min:8';
         }
-        
+
         $validator = Validator::make($request->all(), $validationRules);
 
         if ($validator->fails()) {
@@ -159,24 +159,24 @@ class GestionEtudiantController extends Controller
         try {
             DB::beginTransaction();
 
-            
+
             $user = $etudiant->user;
             $user->name = $request->nom;
             $user->email = $request->email;
-            
+
             if ($request->filled('password')) {
                 $user->password = Hash::make($request->password);
             }
-            
+
             $user->save();
 
             // Mettre à jour l'étudiant
             if ($request->matricule != $etudiant->matricule_etudiant) {
                 $etudiant->matricule_etudiant = strtoupper($request->matricule);
             }
-            
+
             $etudiant->filiere_id = $request->filiere_id;
-            $etudiant->groupe_id = $request->groupe_id;
+            // $etudiant->groupe_id = $request->groupe_id;
             $etudiant->save();
 
             DB::commit();
@@ -184,7 +184,7 @@ class GestionEtudiantController extends Controller
             return redirect()->route('ManagerEtudiant.index')->with('toast', ['type' => 'success', 'message' => 'Étudiant mis à jour avec succès!']);
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return redirect()->back()->with('toast', ['type' => 'error', 'message' => 'Une erreur est survenue: ' . $e->getMessage()])->withInput();
         }
     }
@@ -194,6 +194,6 @@ class GestionEtudiantController extends Controller
      */
     public function destroy(string $id)
     {
-       
+
     }
 }

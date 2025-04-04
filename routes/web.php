@@ -38,4 +38,8 @@ Route::middleware(['auth', 'verified.email'])->group(function () {
     Route::post('/professeurs/check-attribution', [FiliereProfesseurController::class, 'checkAttribution'])->name('FiliereProfesseur.checkAttribution');
     Route::post('/professeurs/attribute-classe', [FiliereProfesseurController::class, 'attributeClasse'])->name('FiliereProfesseur.attributeClasse');
     Route::delete('/professeurs/remove-attribution', [FiliereProfesseurController::class, 'removeAttribution'])->name('FiliereProfesseur.removeAttribution');
+
+
+    //Route pour les professeurs
+    Route::resource('ManagerCour', 'App\Http\Controllers\prof\GestionCours\CourController');
 });

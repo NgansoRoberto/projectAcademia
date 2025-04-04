@@ -17,6 +17,10 @@ class Filiere extends Model
     {
         return $this->hasMany(Etudiant::class);
     }
+    public function cours()
+    {
+        return $this->hasMany(cours::class);
+    }
 
     public function groupes()
     {

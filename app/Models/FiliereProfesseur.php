@@ -18,10 +18,10 @@ class FiliereProfesseur extends Model
 
     public function professeur()
     {
-        return $this->belongsTo(Prof::class, 'prof_id');
+        return $this->belongsTo(Professeur::class, 'prof_id');
     }
-    public function filiere()
+    public function cours()
     {
-        return $this->belongsTo(Filiere::class, 'filiere_id');
+        return $this->hasMany(Cours::class, 'filiere_id', 'id');
     }
 }
