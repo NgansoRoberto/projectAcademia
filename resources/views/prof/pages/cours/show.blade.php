@@ -41,23 +41,10 @@
                                 </div>
 
                                 @php
-                                    // Déterminer le statut du cours
+
                                     $premiereSeance = $cours->seances->sortBy('date_seance')->first();
                                     $derniereSeance = $cours->seances->sortByDesc('date_seance')->first();
 
-                                    if (!$premiereSeance) {
-                                        $statusCours = 'Non démarré';
-                                        $statusColor = 'warning';
-                                    } elseif (\Carbon\Carbon::parse($derniereSeance->date_seance)->isPast()) {
-                                        $statusCours = 'Terminé';
-                                        $statusColor = 'success';
-                                    } elseif (\Carbon\Carbon::parse($premiereSeance->date_seance)->isFuture()) {
-                                        $statusCours = 'Prévu';
-                                        $statusColor = 'info';
-                                    } else {
-                                        $statusCours = 'En cours';
-                                        $statusColor = 'warning';
-                                    }
                                 @endphp
 
 
@@ -104,8 +91,8 @@
                                 <div class="col-md-6 col-12">
                                     <div class="mb-2">
                                         <h6 class="text-muted font-weight-bold mb-1 fs-5">Satut</h6>
-                                        <div class="badge badge-light-{{ $statusColor }} badge-pill mb-1" style="font-size: 0.9rem;">
-                                            <i data-feather="clock" class="mr-25" style="width: 14px; height: 14px;"></i> {{ $statusCours }}
+                                        <div class="badge badge-light-warning badge-pill mb-1" style="font-size: 0.9rem;">
+                                            <i data-feather="clock" class="mr-25" style="width: 14px; height: 14px;"></i> {{ $cours->statut }}
                                         </div>
                                     </div>
 
@@ -150,13 +137,46 @@
                                         <i data-feather="file-text" class="mr-25"></i>
                                         <span>Ajouter un document</span>
                                     </a>
-                                    <a href="#" class="btn btn-outline-success btn-block">
+                                    <a href="#" class="btn btn-outline-success btn-block" data-toggle="modal" data-target="#notifierEtudiantsModal">
                                         <i data-feather="message-square" class="mr-25"></i>
-                                        <span>Envoyer un message aux étudiants</span>
+                                        <span>Notifier les étudiants de {{ $cours->filiere->nom }}</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Notifier Étudiants -->
+            <div class="modal fade" id="notifierEtudiantsModal" tabindex="-1" role="dialog" aria-labelledby="notifierEtudiantsModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="notifierEtudiantsModalTitle">Notifier les étudiants de {{ $cours->filiere->nom }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{route('NotifierCourEtudiants', $cours->filiere)}}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="sujet">Sujet</label>
+                                    <input type="text" class="form-control" id="sujet" name="sujet" placeholder="Entrez le sujet de la notification" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Entrez votre message" required></textarea>
+                                </div>
+                                <input type="hidden" name="filiere_id" value="{{ $cours->filiere_id }}">
+                                <input type="hidden" name="cours_id" value="{{ $cours->id }}">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn text-white" style="background:#d87e46;">Envoyer la notification</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -206,39 +226,28 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach($seances as $seance)
-                                                            @php
-                                                                $dateSeance = \Carbon\Carbon::parse($seance->date_seance);
-                                                                $aujourdhui = \Carbon\Carbon::today();
-
-                                                                if ($dateSeance->isPast()) {
-                                                                    $badgeClass = 'badge-light-secondary';
-                                                                    $status = 'Passée';
-                                                                } elseif ($dateSeance->isToday()) {
-                                                                    $badgeClass = 'badge-light-success';
-                                                                    $status = 'Aujourd\'hui';
-                                                                } else {
-                                                                    $badgeClass = 'badge-light-primary';
-                                                                    $status = 'Planifié';
-                                                                }
-                                                            @endphp
                                                             <tr>
                                                                 <td>{{ $seance->numero_seance }}</td>
-                                                                <td>{{ Ladate($dateSeance) }}</td>
+                                                                <td>{{ Ladate($seance->date_seance)}}</td>
                                                                 <td>{{ $seance->heure_debut }} - {{ $seance->heure_fin }}</td>
-                                                                <td><span class="badge {{ $badgeClass }}">{{ $status }}</span></td>
+                                                                <td><span class="badge badge-light-primary">{{ $seance->statut }} </span></td>
                                                                 <td>
                                                                     <div class="dropdown">
                                                                         <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                                                                             <i data-feather="more-vertical"></i>
                                                                         </button>
                                                                         <div class="dropdown-menu dropdown-menu-right">
+                                                                            <a class="dropdown-item" href="{{route('show-seance', $seance->id)}}">
+                                                                                <i data-feather="crosshair" class="mr-50"></i>
+                                                                                <span>Demarrer la seance</span>
+                                                                            </a>
                                                                             <a class="dropdown-item" href="#">
                                                                                 <i data-feather="edit-2" class="mr-50"></i>
                                                                                 <span>Modifier</span>
                                                                             </a>
-                                                                            <a class="dropdown-item" href="#">
-                                                                                <i data-feather="check-square" class="mr-50"></i>
-                                                                                <span>Marquer présences</span>
+                                                                            <a class="dropdown-item" href="{{route('show-detail-seance', $seance->id)}}">
+                                                                                <i data-feather="eye" class="mr-50"></i>
+                                                                                <span>Voir Detail</span>
                                                                             </a>
                                                                             <a class="dropdown-item" href="#">
                                                                                 <i data-feather="file-text" class="mr-50"></i>

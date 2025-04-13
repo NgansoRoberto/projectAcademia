@@ -207,15 +207,25 @@
                     <ul class="menu-content">
 
                         <li id="add_professeur">
+                            <a class="d-flex align-items-center" href="{{route('ListeCoursEtudiant')}}">
+                                <i data-feather="book"></i>
+                                <span class="menu-item" data-i18n="List">
+                                    Listes des Cours
+                                </span>
+                            </a>
+                        </li>
+
+                        <li id="add_professeur">
                             <a class="d-flex align-items-center" href="#">
                                 <i data-feather="book"></i>
                                 <span class="menu-item" data-i18n="List">
-                                    Aller cours
+                                    Seance Lancer
                                 </span>
                             </a>
                         </li>
                     </ul>
                 </li>
+
 
 
 

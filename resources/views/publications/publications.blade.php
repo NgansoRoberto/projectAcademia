@@ -37,33 +37,7 @@
             <!-- Liste des publications -->
             <div class="publications-list">
                 <!-- Publication 1 -->
-                <div class="card shadow-sm border-0 rounded-lg mb-4" data-aos="fade-up">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Avatar">
-                            <div>
-                                <h6 class="mb-0 fw-bold">Dr. Kamga Jean</h6>
-                                <small class="text-muted">Professeur de Mathématiques • Il y a 2 heures</small>
-                            </div>
-                        </div>
-                        <p>Chers étudiants, je vous rappelle que les travaux dirigés de mathématiques auront lieu demain à 14h dans l'amphithéâtre A. N'oubliez pas d'apporter vos calculatrices et vos formulaires.</p>
-                        <div class="border-top pt-3 mt-3">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <button class="btn btn-sm btn-light me-2">
-                                        <i class="far fa-thumbs-up me-1"></i> J'aime (15)
-                                    </button>
-                                    <button class="btn btn-sm btn-light">
-                                        <i class="far fa-comment me-1"></i> Commenter (3)
-                                    </button>
-                                </div>
-                                <button class="btn btn-sm btn-light">
-                                    <i class="fas fa-share me-1"></i> Partager
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Publication 2 -->
                 <div class="card shadow-sm border-0 rounded-lg mb-4" data-aos="fade-up" data-aos-delay="100">

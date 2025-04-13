@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,6 +28,10 @@ class HomeController extends Controller
     }
     public function index()
     {
-        return view('home');
+        $Notifications = Notification::where('user_id', auth()->id())
+        ->where('statut', 'envoyée')
+        ->orderBy('created_at', 'desc')
+        ->get();
+        return view('home' , compact('Notifications'));
     }
 }

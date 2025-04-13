@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 <!-- BEGIN: Head-->
 
 <head>
-  
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\Auth;
             background :#d87e46 !important;
             border-radius: 4px !important;
         }
-        
+
     </style>
 
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png') }}">
@@ -92,10 +92,64 @@ use Illuminate\Support\Facades\Auth;
                     <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
                 </ul>
             </div>
-      
+
             <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="moon"></i></a></li>
 
             <ul class="nav navbar-nav align-items-center ml-auto">
+                <li class="nav-item dropdown dropdown-notification mr-25">
+                    @if(auth()->user()->role == 'ETUDIANT')
+                        <a class="nav-link" href="javascript:void(0);" data-toggle="dropdown">
+                            <i class="ficon" data-feather="bell"></i>
+                            <span class="badge badge-pill badge-danger badge-up">{{ count($Notifications ?? []) }}</span>
+                        </a>
+                    @endif
+                    
+                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                        <li class="dropdown-menu-header">
+                            <div class="dropdown-header d-flex">
+                                <h4 class="notification-title mb-0 mr-auto">Notifications</h4>
+                                <div class="badge badge-pill badge-light-warning">{{ count($Notifications ?? []) }}</div>
+                            </div>
+                        </li>
+                        <li class="scrollable-container media-list">
+                            @forelse($Notifications ?? [] as $notification)
+                                <a class="d-flex" href="javascript:void(0)" onclick="marquerCommeLue({{ $notification->id }})">
+                                    <div class="media d-flex align-items-start">
+                                        <div class="media-left">
+                                            <div class="avatar bg-light-primary">
+                                                <div class="avatar-content">
+                                                    @php
+                                                        $initials = get_initials($notification->expediteur_id ? App\Models\User::find($notification->expediteur_id)->name ?? 'SYS' : 'SYS');
+                                                        echo $initials;
+                                                    @endphp
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="media-heading">
+                                                <span class="font-weight-bolder">{{ $notification->sujet }}</span>
+                                            </p>
+                                            <small class="notification-text">{{ Str::limit($notification->message, 50) }}</small>
+                                            <small class="text-muted d-block mt-1">{{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/Y H:i') }}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            @empty
+                                <div class="media d-flex align-items-center">
+                                    <div class="media-body text-center p-1">
+                                        <p class="media-heading mb-0">Aucune notification</p>
+                                    </div>
+                                </div>
+                            @endforelse
+                        </li>
+                        <li class="dropdown-menu-footer">
+                            <a class="btn text-white btn-block" href="{{route('etudiants.list-notification')}}" style="background-color: #d87e46; border-color: #d87e46;">
+                                Voir toutes les notifications
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item dropdown dropdown-user" data-menu="dropdown">
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
@@ -157,7 +211,7 @@ use Illuminate\Support\Facades\Auth;
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-  
+
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
 
@@ -281,7 +335,29 @@ use Illuminate\Support\Facades\Auth;
         //     }
         // });
 
-       
+        //fonction qui verifie le status d'une notification dans un compte etudiant
+
+        const userId = {{ Auth::user()->id }};
+        const userName = "{{ Auth::user()->name }}";
+
+
+        $.get('/notifications-non-lues', function (data) {
+            if (data.length > 0) {
+                afficherNotification(data[0]);
+            }
+        });
+
+
+        function afficherNotification(notification) {
+            
+            toastr['info']('Vous avez reçu une nouvelle notification', notification.sujet, {
+                closeButton: true,
+                tapToDismiss: false
+            });
+        }
+
+
+
     </script>
 </body>
 <!-- END: Body-->

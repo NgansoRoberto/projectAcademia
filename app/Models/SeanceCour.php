@@ -22,7 +22,7 @@ class SeanceCour extends Model
         'statut',
     ];
 
-    public function cour()
+    public function cours()
     {
         return $this->belongsTo(Cours::class, 'cours_id');
     }

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\gestionsProf\FiliereProfesseurController;
+use App\Http\Controllers\etudiant\Cours\EtudiantCourController;
+use App\Http\Controllers\prof\seances\GestionSeancesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,9 +44,25 @@ Route::middleware(['auth', 'verified.email'])->group(function () {
 
     //Route pour les professeurs
     Route::resource('ManagerCour', 'App\Http\Controllers\prof\GestionCours\CourController');
+    Route::post('/Notification-etudiants-cours/{cours_id}', [App\Http\Controllers\NotificationController::class, 'NotifierEtudiants'])->name('NotifierCourEtudiants');
+    Route::get('/seance/{id}', [GestionSeancesController::class, 'show'])->name('show-seance');
+    Route::get('/seance-detail/{id}', [GestionSeancesController::class, 'detail'])->name('show-detail-seance');
+    Route::post('/seances/{id}/demarrer', [GestionSeancesController::class, 'demarrerSeance'])->name('demarrer-seance');
+    Route::post('/seances/{id}/terminer', [GestionSeancesController::class, 'terminerSeance'])->name('terminer-seance');
+
+    Route::post('/seances/{seance}/ajouter-support', [GestionSeancesController::class, 'add_fichier'])->name('ajouter-support');
+    // Route pour télécharger un support de cours
+    Route::get('/supports/{support}/telecharger', [GestionSeancesController::class, 'download_fichier'])->name('telecharger-support');
 
 
 
-    //Route pour les professeurs
-    
+    //Route pour les etudiants
+    Route::get('/Cours-Etudiant', [EtudiantCourController::class, 'index'])->name('ListeCoursEtudiant');
+    Route::get('/notifications-non-lues', [EtudiantCourController::class, 'NotificationNonLue'])->name('notifications-non-lues');
+    Route::get('/list-notifications-etudiant', [EtudiantCourController::class, 'indexNotifications'])->name('etudiants.list-notification');
+    Route::post('/change-staus', [EtudiantCourController::class, 'changeStatusNotification'])->name('etudiants.change-status');
+
+
+
+
 });

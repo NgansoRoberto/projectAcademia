@@ -20,5 +20,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+
+        view()->composer('*', function ($view) {
+            if (auth()->check()) {
+                $notifications = \App\Models\Notification::where('user_id', auth()->id())
+                    ->where('statut', 'envoyée')
+                    ->orderBy('created_at', 'desc')
+                    ->take(3)
+                    ->get();
+                
+                $view->with('Notifications', $notifications);
+            }
+        });
     }
 }

@@ -85,6 +85,13 @@ use Illuminate\Support\Carbon;
             return $ladate->format('d').' '.$mois[$ladate->format('m')-1].' '.$ladate->format('Y');
         }
     }
+    if (!function_exists('Ladate_heure')) {
+        function Ladate_heure($ladate) {
+            $mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Decembre'];
+            $ladate = new DateTime($ladate);
+            return $ladate->format('d ').$mois[$ladate->format('m')-1].$ladate->format(' Y').' à '.$ladate->format(' H').'h'.$ladate->format(' i').'min';
+        }
+    }
     function getCodeColor($userId)
     {
         $colors = [
